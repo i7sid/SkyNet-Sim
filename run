@@ -1,0 +1,2 @@
+#!/bin/sh
+./SkyNet -l../MiXiM/src/mixim -n".:../MiXiM/examples:../MiXiM/src/base:../MiXiM/src/inet_stub:../MiXiM/src/modules" "$@"
