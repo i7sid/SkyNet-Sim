@@ -95,7 +95,7 @@ void PgRadioModel::filterSignal(AirFrame *frame, const Coord& senderPos, const C
 	sig.addAttenuation(new PgRadioModel::Mapping(lossFreeSpace, lossHor, lossVert, debug));
 }
 
-DimensionSet PgRadioModel::Mapping::dimensions(DimensionSet::timeFreqDomain);
+DimensionSet PgRadioModel::Mapping::dimensions(DimensionSet::timeDomain);
 
 double PgRadioModel::Mapping::getValue(const Argument& pos) const
 {
