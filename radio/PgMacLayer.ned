@@ -13,29 +13,12 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#ifndef PGPHYLAYER_H_
-#define PGPHYLAYER_H_
+package skynet.radio;
 
-#include "MiXiMDefs.h"
-#include "PhyLayer.h"
+import org.mixim.modules.mac.CSMA802154;
 
-class MIXIM_API PgPhyLayer : public PhyLayer
+simple PgMacLayer extends CSMA802154
 {
-protected:
-
-	/**
-	 * @brief Creates and returns an instance of the AnalogueModel with the
-	 * specified name.
-	 *
-	 * Is able to initialize the following AnalogueModels:
-	 * - PgRadioModel
-	 */
-	virtual AnalogueModel* getAnalogueModelFromName(std::string name, ParameterMap& params);
-
-	AnalogueModel* initializePgRadioModel(ParameterMap& params);
-
-	//virtual void handleAirFrameEndReceive(AirFrame* frame);
-
-};
-
-#endif /* PGPHYLAYER_H_ */
+    parameters:
+        @class(PgMacLayer);
+}

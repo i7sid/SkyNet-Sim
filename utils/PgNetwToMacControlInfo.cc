@@ -13,29 +13,22 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#ifndef PGPHYLAYER_H_
-#define PGPHYLAYER_H_
+#include <utils/PgNetwToMacControlInfo.h>
 
-#include "MiXiMDefs.h"
-#include "PhyLayer.h"
+#include <cassert>
+#ifdef MIXIM_INET
+#include <Ieee802Ctrl_m.h>
+typedef Ieee802Ctrl           tNetwToMacControlInfoBase;
+#else
+typedef PgNetwToMacControlInfo  tNetwToMacControlInfoBase;
+#endif
 
-class MIXIM_API PgPhyLayer : public PhyLayer
+void PgNetwToMacControlInfo::setTxPower(double mW)
 {
-protected:
+	txPower_mW = mW;
+}
 
-	/**
-	 * @brief Creates and returns an instance of the AnalogueModel with the
-	 * specified name.
-	 *
-	 * Is able to initialize the following AnalogueModels:
-	 * - PgRadioModel
-	 */
-	virtual AnalogueModel* getAnalogueModelFromName(std::string name, ParameterMap& params);
-
-	AnalogueModel* initializePgRadioModel(ParameterMap& params);
-
-	//virtual void handleAirFrameEndReceive(AirFrame* frame);
-
-};
-
-#endif /* PGPHYLAYER_H_ */
+double PgNetwToMacControlInfo::getTxPower(void)
+{
+	return txPower_mW;
+}
