@@ -2,7 +2,7 @@
 # OMNeT++/OMNEST Makefile for SkyNet
 #
 # This file was generated with the command:
-#  opp_makemake -f --deep -O out -I../mixim-sommer/src/modules/analogueModel -I../mixim-sommer/src/modules/phy -I../mixim-sommer/src/modules/mac/ieee80211p -I../mixim-sommer/src/modules/mobility -I../mixim-sommer/src/modules/messages -I../mixim-sommer/src/base/utils -I../mixim-sommer/src/base/phyLayer -I../mixim-sommer/src/modules/utility -I../mixim-sommer/src/modules -I../mixim-sommer/src/base/modules -I../mixim-sommer/src/base/messages -I../mixim-sommer/src/base/connectionManager -I../mixim-sommer/src/modules/obstacle -L../mixim-sommer/out/$$\(CONFIGNAME\)/src/modules -L../mixim-sommer/out/$$\(CONFIGNAME\)/src/base -L../mixim-sommer/out/$$\(CONFIGNAME\)/tests/testUtils -lmiximmodules -lmiximbase -lmiximtestUtils -KMIXIM_SOMMER_PROJ=../mixim-sommer
+#  opp_makemake -f --deep -O out -I../mixim-sommer/src/modules/analogueModel -I../mixim-sommer/src/modules/phy -I../mixim-sommer/src/modules/mac/ieee80211p -I../mixim-sommer/src/modules/mobility -I../mixim-sommer/src/modules/messages -I../mixim-sommer/src/base/utils -I../mixim-sommer/src/base/phyLayer -I../mixim-sommer/src/modules/utility -I../mixim-sommer/src/modules -I../mixim-sommer/src/base/modules -I../mixim-sommer/src/base/messages -I../mixim-sommer/src/modules/obstacle -I../mixim-sommer/src/base/connectionManager -L../mixim-sommer/out/$$\(CONFIGNAME\)/src/modules -L../mixim-sommer/out/$$\(CONFIGNAME\)/src/base -L../mixim-sommer/out/$$\(CONFIGNAME\)/tests/testUtils -lmiximmodules -lmiximbase -lmiximtestUtils -KMIXIM_SOMMER_PROJ=../mixim-sommer
 #
 
 # Name of target to be created (-o option)
@@ -26,14 +26,16 @@ INCLUDE_PATH = \
     -I../mixim-sommer/src/modules \
     -I../mixim-sommer/src/base/modules \
     -I../mixim-sommer/src/base/messages \
-    -I../mixim-sommer/src/base/connectionManager \
     -I../mixim-sommer/src/modules/obstacle \
+    -I../mixim-sommer/src/base/connectionManager \
     -I. \
     -ILogFiles \
     -ILogFiles/20131104 \
     -ILogFiles/2013BassanoTag1 \
     -Iradio \
-    -Iresults
+    -Iresults \
+    -Iresults/20131104 \
+    -Iutils
 
 # Additional object and library files to link with
 EXTRA_OBJS =
@@ -54,8 +56,10 @@ OBJS = \
     $O/Position.o \
     $O/PositionMessage.o \
     $O/Transmission.o \
+    $O/radio/PgMacLayer.o \
     $O/radio/PgPhyLayer.o \
-    $O/radio/PgRadioModel.o
+    $O/radio/PgRadioModel.o \
+    $O/utils/PgNetwToMacControlInfo.o
 
 # Message files
 MSGFILES =
@@ -140,29 +144,43 @@ clean:
 	$(Q)-rm -f LogFiles/2013BassanoTag1/*_m.cc LogFiles/2013BassanoTag1/*_m.h
 	$(Q)-rm -f radio/*_m.cc radio/*_m.h
 	$(Q)-rm -f results/*_m.cc results/*_m.h
+	$(Q)-rm -f results/20131104/*_m.cc results/20131104/*_m.h
+	$(Q)-rm -f utils/*_m.cc utils/*_m.h
 
 cleanall: clean
 	$(Q)-rm -rf $(PROJECT_OUTPUT_DIR)
 
 depend:
 	$(qecho) Creating dependencies...
-	$(Q)$(MAKEDEPEND) $(INCLUDE_PATH) -f Makefile -P\$$O/ -- $(MSG_CC_FILES)  ./*.cc LogFiles/*.cc LogFiles/20131104/*.cc LogFiles/2013BassanoTag1/*.cc radio/*.cc results/*.cc
+	$(Q)$(MAKEDEPEND) $(INCLUDE_PATH) -f Makefile -P\$$O/ -- $(MSG_CC_FILES)  ./*.cc LogFiles/*.cc LogFiles/20131104/*.cc LogFiles/2013BassanoTag1/*.cc radio/*.cc results/*.cc results/20131104/*.cc utils/*.cc
 
 # DO NOT DELETE THIS LINE -- make depend depends on it.
 $O/GliderApplLayer.o: GliderApplLayer.cc \
 	GliderApplLayer.h \
+	GliderMobility.h \
+	Position.h \
 	Transmission.h \
+	utils/PgNetwToMacControlInfo.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/messages/ApplPkt_m.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/modules/BaseApplLayer.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/modules/BaseBattery.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/modules/BaseLayer.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/modules/BaseMobility.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/modules/BaseModule.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/modules/BaseWorldUtility.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/modules/BatteryAccess.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/Coord.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/FWMath.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/FindModule.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/MacToNetwControlInfo.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/MiXiMDefs.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/Move.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/NetwControlInfo.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/NetwToMacControlInfo.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/PassedMessage.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/SimpleAddress.h \
-	$(MIXIM_SOMMER_PROJ)/src/base/utils/miximkerneldefs.h
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/miximkerneldefs.h \
+	$(MIXIM_SOMMER_PROJ)/src/modules/mobility/LineSegmentsMobilityBase.h
 $O/GliderMobility.o: GliderMobility.cc \
 	GliderMobility.h \
 	Position.h \
@@ -192,6 +210,54 @@ $O/PositionMessage.o: PositionMessage.cc \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/miximkerneldefs.h
 $O/Transmission.o: Transmission.cc \
 	Transmission.h
+$O/radio/PgMacLayer.o: radio/PgMacLayer.cc \
+	radio/PgMacLayer.h \
+	utils/PgNetwToMacControlInfo.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/connectionManager/BaseConnectionManager.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/connectionManager/ChannelAccess.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/connectionManager/NicEntry.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/messages/AirFrame_m.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/messages/ChannelSenseRequest_m.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/messages/MacPkt_m.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/modules/AddressingInterface.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/modules/ArpInterface.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/modules/BaseArp.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/modules/BaseBattery.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/modules/BaseLayer.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/modules/BaseMacLayer.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/modules/BaseMobility.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/modules/BaseModule.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/modules/BaseWorldUtility.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/modules/BatteryAccess.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/phyLayer/AnalogueModel.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/phyLayer/BaseDecider.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/phyLayer/BasePhyLayer.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/phyLayer/ChannelInfo.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/phyLayer/ChannelState.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/phyLayer/Decider.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/phyLayer/DeciderToPhyInterface.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/phyLayer/Interpolation.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/phyLayer/MacToPhyInterface.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/phyLayer/Mapping.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/phyLayer/MappingBase.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/phyLayer/MappingUtils.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/phyLayer/PhyToMacControlInfo.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/phyLayer/PhyUtils.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/phyLayer/Signal_.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/Coord.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/FWMath.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/FindModule.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/MacToNetwControlInfo.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/MiXiMDefs.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/Move.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/NetwControlInfo.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/NetwToMacControlInfo.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/PassedMessage.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/SimpleAddress.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/miximkerneldefs.h \
+	$(MIXIM_SOMMER_PROJ)/src/modules/phy/Decider802154Narrow.h \
+	$(MIXIM_SOMMER_PROJ)/src/modules/phy/DeciderResult802154Narrow.h \
+	$(MIXIM_SOMMER_PROJ)/src/modules/utility/DroppedPacket.h
 $O/radio/PgPhyLayer.o: radio/PgPhyLayer.cc \
 	radio/PgPhyLayer.h \
 	radio/PgRadioModel.h \
@@ -255,4 +321,11 @@ $O/radio/PgRadioModel.o: radio/PgRadioModel.cc \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/miximkerneldefs.h \
 	$(MIXIM_SOMMER_PROJ)/src/modules/mobility/LineSegmentsMobilityBase.h \
 	$(MIXIM_SOMMER_PROJ)/src/modules/phy/PhyLayer.h
+$O/utils/PgNetwToMacControlInfo.o: utils/PgNetwToMacControlInfo.cc \
+	utils/PgNetwToMacControlInfo.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/MiXiMDefs.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/NetwControlInfo.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/NetwToMacControlInfo.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/SimpleAddress.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/miximkerneldefs.h
 

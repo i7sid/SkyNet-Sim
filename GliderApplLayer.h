@@ -31,10 +31,15 @@ class MIXIM_API GliderApplLayer : public BaseApplLayer
 {
     private:
         std::ifstream txStream;
+        std::ofstream rssiErr;
+        std::ofstream results;
+        std::ofstream resultsTx;
         Transmission nextLoggedTransmission;
+        std::map <std::string, double> rxDb;
 
         void evalLog(std::string line);
         void updateTransmission(void);
+        void fillRxDatabase(const char *fileRx);
 
     public:
         GliderApplLayer() :
@@ -73,7 +78,10 @@ class MIXIM_API GliderApplLayer : public BaseApplLayer
         bool bSendReply;
 
         /** @brief send a broadcast packet to all connected neighbors */
-        void sendBroadcast(const char* name);
+        void sendBroadcast(const char* name, double txPower_mW);
+
+
+        void finish();
 };
 
 #endif

@@ -1,5 +1,6 @@
 #ifndef ANALOGUEMODEL_PGRADIOMODEL_H
 #define ANALOGUEMODEL_PGRADIOMODEL_H
+#include <random>
 
 #include "AnalogueModel.h"
 #include "BaseWorldUtility.h"
@@ -10,7 +11,7 @@ class PgRadioModel: public AnalogueModel
 
 public:
 	PgRadioModel(double carrierFrequency, double kappa, double zeta, bool debug) :
-		carrierFrequency(carrierFrequency), kappa(kappa), zeta(zeta), debug(debug)
+			carrierFrequency(carrierFrequency), kappa(kappa), zeta(zeta), debug(debug)
 	{
 	}
 
@@ -45,13 +46,15 @@ protected:
 		}
 	};
 
-	 double carrierFrequency;
-	 double kappa;
-	 double zeta;
-
+	double carrierFrequency;
+	double kappa;
+	double zeta;
 
 	/** @brief Whether debug messages should be displayed. */
 	bool debug;
+
+	std::default_random_engine generator;
+
 };
 
 #endif /* ANALOGUEMODEL_PGRADIOMODEL_H */

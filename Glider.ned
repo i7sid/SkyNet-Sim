@@ -40,6 +40,7 @@ module Glider
             parameters:
                 @display("p=70,380;i=block/wrxtx,#008000");
                 phyType = "PgPhyLayer";
+                macType = "PgMacLayer";
         }
         appl: GliderApplLayer {
             parameters:

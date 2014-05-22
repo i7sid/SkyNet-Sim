@@ -181,7 +181,7 @@ void GliderMobility::initialize(int stage)
 
 void GliderMobility::finish()
 {
-	EV << "node[" << getParentModule()->getIndex() << "] finished";
+	EV << "node[" << getParentModule()->getIndex() << "] mobility finished" << endl;
 }
 
 void GliderMobility::fixIfHostGetsOutside()

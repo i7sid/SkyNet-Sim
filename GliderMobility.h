@@ -21,6 +21,7 @@
 
 #include "MiXiMDefs.h"
 #include "LineSegmentsMobilityBase.h"
+#include "Position.h"
 
 class MIXIM_API GliderMobility :  public LineSegmentsMobilityBase
 {

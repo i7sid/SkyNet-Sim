@@ -24,6 +24,10 @@ simple GliderApplLayer like IBaseApplLayer
 {
     parameters:
         string txFile = default("");
+        string rxFile = default("");
+        string resultRssiErrFile = default("");
+        string results = default("");
+        string resultsTx = default("");
     	bool debug      = default(false); // debug switch
     	int headerLength @unit("bit"); // length of the application message header (in bits)
     	int burstSize = default(1); // size of the burst
