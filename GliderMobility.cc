@@ -145,6 +145,7 @@ void GliderMobility::setTargetPosition()
 	if (move.getSpeed() <= 0)                          //circumvent move.getSpeed()==0 nuts...
 		move.setSpeed(0.1);
 
+	EV << "Pos: " << nextLoggedPosition.x << "," << nextLoggedPosition.y << "," << nextLoggedPosition.z << endl;
 	EV << "targetTime:" << targetTime << " updateInterval: " << updateInterval << endl;
 
 }
@@ -172,8 +173,15 @@ void GliderMobility::initialize(int stage)
 	}
 	else if (stage == 1)
 	{
-		//updateMyPosition();   //skip first position TODO... fix timestemp 0 issue
-		//updateMyPosition();
+		//set start position
+		std::string line;
+		getline(posStream, line);
+		evalLog(line);
+		targetPos.x = nextLoggedPosition.x;
+		targetPos.y = nextLoggedPosition.y;
+		targetPos.z = nextLoggedPosition.z;
+
+		//EV << "Startpos: " << nextLoggedPosition.x << "," << nextLoggedPosition.y << "," << nextLoggedPosition.z << endl;
 
 		beginNextMove(new cMessage("self", 0));
 	}

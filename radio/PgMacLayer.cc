@@ -327,7 +327,7 @@ void PgMacLayer::attachSignal(MacPkt* mac, simtime_t_cref startTime) {
 	//get tx power
 	assert(dynamic_cast<PgNetwToMacControlInfo*>(cInfo));
 	txPower = dynamic_cast<PgNetwToMacControlInfo*>(cInfo)->getTxPower();
-	delete cInfo;
+	//delete cInfo;
 	debugEV << "#############txPower: " << txPower << "mW" << endl;
 	simtime_t duration = (mac->getBitLength() + phyHeaderLength)/bitrate;
 
@@ -435,7 +435,7 @@ void PgMacLayer::updateStatusCCA(t_mac_event event, cMessage *msg)
 void PgMacLayer::updateStatusTransmitFrame(t_mac_event event, cMessage *msg) {
 
 	if (event == EV_FRAME_TRANSMITTED) {
-		//    delete msg;
+		//   delete msg;
 		MacPkt * packet = macQueue.front();
 		phy->setRadioState(Radio::RX);
 
@@ -458,7 +458,7 @@ void PgMacLayer::updateStatusTransmitFrame(t_mac_event event, cMessage *msg) {
 		} else {
 			debugEV << ": RadioSetupRx, manageQueue..." << endl;
 			macQueue.pop_front();
-//			delete packet;									//FIXME: memory lack might be here, if any :)
+			delete packet;									//FIXME: memory lack might be here, if any :)
 			manageQueue();
 		}
 	} else {

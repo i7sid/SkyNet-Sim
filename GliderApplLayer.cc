@@ -284,6 +284,7 @@ void GliderApplLayer::finish(void)
 {
 	EV << "node[" << getParentModule()->getIndex() << "] App Layer finish" << endl;
 	EV << "Unused rssi measurements: " << rxDb.size() << endl;
+	cancelAndDelete(txTimer);
 	rssiErr.close();
 	results.close();
 	resultsTx.close();
