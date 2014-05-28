@@ -31,10 +31,12 @@ INCLUDE_PATH = \
     -I. \
     -ILogFiles \
     -ILogFiles/20131104 \
+    -ILogFiles/20131105 \
     -ILogFiles/2013BassanoTag1 \
     -Iradio \
     -Iresults \
     -Iresults/20131104 \
+    -Iresults/20131105 \
     -Iutils
 
 # Additional object and library files to link with
@@ -141,10 +143,12 @@ clean:
 	$(Q)-rm -f ./*_m.cc ./*_m.h
 	$(Q)-rm -f LogFiles/*_m.cc LogFiles/*_m.h
 	$(Q)-rm -f LogFiles/20131104/*_m.cc LogFiles/20131104/*_m.h
+	$(Q)-rm -f LogFiles/20131105/*_m.cc LogFiles/20131105/*_m.h
 	$(Q)-rm -f LogFiles/2013BassanoTag1/*_m.cc LogFiles/2013BassanoTag1/*_m.h
 	$(Q)-rm -f radio/*_m.cc radio/*_m.h
 	$(Q)-rm -f results/*_m.cc results/*_m.h
 	$(Q)-rm -f results/20131104/*_m.cc results/20131104/*_m.h
+	$(Q)-rm -f results/20131105/*_m.cc results/20131105/*_m.h
 	$(Q)-rm -f utils/*_m.cc utils/*_m.h
 
 cleanall: clean
@@ -152,7 +156,7 @@ cleanall: clean
 
 depend:
 	$(qecho) Creating dependencies...
-	$(Q)$(MAKEDEPEND) $(INCLUDE_PATH) -f Makefile -P\$$O/ -- $(MSG_CC_FILES)  ./*.cc LogFiles/*.cc LogFiles/20131104/*.cc LogFiles/2013BassanoTag1/*.cc radio/*.cc results/*.cc results/20131104/*.cc utils/*.cc
+	$(Q)$(MAKEDEPEND) $(INCLUDE_PATH) -f Makefile -P\$$O/ -- $(MSG_CC_FILES)  ./*.cc LogFiles/*.cc LogFiles/20131104/*.cc LogFiles/20131105/*.cc LogFiles/2013BassanoTag1/*.cc radio/*.cc results/*.cc results/20131104/*.cc results/20131105/*.cc utils/*.cc
 
 # DO NOT DELETE THIS LINE -- make depend depends on it.
 $O/GliderApplLayer.o: GliderApplLayer.cc \
