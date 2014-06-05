@@ -66,6 +66,20 @@ void GliderApplLayer::updateTransmission(void)
 
 	evalLog(line);
 
+	if(simTime() > nextLoggedTransmission.timeStamp)
+	{
+		std::cerr << "Current time: " << simTime() << ". However event should be sceduled at: " << nextLoggedTransmission.timeStamp << endl;
+		if(simTime().dbl() < nextLoggedTransmission.timeStamp + 10.0)
+		{
+			std::cerr << "Cheating by setting event to very near future" << endl;
+			nextLoggedTransmission.timeStamp = simTime().dbl() + 0.01;
+		}
+		else
+		{
+			std::cerr << "Event too far in the past" << endl;
+		}
+	}
+
 	scheduleAt(nextLoggedTransmission.timeStamp, txTimer);
 	EV << "node[" << getParentModule()->getIndex() << "] tx timer: " << nextLoggedTransmission.timeStamp;
 }

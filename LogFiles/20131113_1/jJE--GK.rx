@@ -1,0 +1,3 @@
+ReceiveTime,Right,Height,Altitude,Bearing,Speed,Accuracy,LocTimestamp,Antenna,Comment,Voltage,SrcMAC,Rssi,RxCount,PaketID
+67420,118.689999999944,3478.5700000003,1569,44,0,0,50222320,100mm,-,0,Hans,-103,0,50222300Hans
+67520,118.689999999944,3478.5700000003,1569,44,0,0,50222420,100mm,-,0,Hans,-94.5,1,50222400Hans

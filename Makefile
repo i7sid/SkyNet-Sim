@@ -34,6 +34,16 @@ INCLUDE_PATH = \
     -ILogFiles/20131105 \
     -ILogFiles/20131111_1 \
     -ILogFiles/20131111_2 \
+    -ILogFiles/20131112 \
+    -ILogFiles/20131113_1 \
+    -ILogFiles/20131113_2 \
+    -ILogFiles/20131114 \
+    -ILogFiles/20131115 \
+    -ILogFiles/20131116 \
+    -ILogFiles/20131117_1 \
+    -ILogFiles/20131117_2 \
+    -ILogFiles/20131118 \
+    -ILogFiles/20131121 \
     -ILogFiles/2013BassanoTag1 \
     -Iradio \
     -Iresults \
@@ -41,6 +51,16 @@ INCLUDE_PATH = \
     -Iresults/20131105 \
     -Iresults/20131111_1 \
     -Iresults/20131111_2 \
+    -Iresults/20131112 \
+    -Iresults/20131113_1 \
+    -Iresults/20131113_2 \
+    -Iresults/20131114 \
+    -Iresults/20131115 \
+    -Iresults/20131116 \
+    -Iresults/20131117_1 \
+    -Iresults/20131117_2 \
+    -Iresults/20131118 \
+    -Iresults/20131121 \
     -Iutils
 
 # Additional object and library files to link with
@@ -150,6 +170,16 @@ clean:
 	$(Q)-rm -f LogFiles/20131105/*_m.cc LogFiles/20131105/*_m.h
 	$(Q)-rm -f LogFiles/20131111_1/*_m.cc LogFiles/20131111_1/*_m.h
 	$(Q)-rm -f LogFiles/20131111_2/*_m.cc LogFiles/20131111_2/*_m.h
+	$(Q)-rm -f LogFiles/20131112/*_m.cc LogFiles/20131112/*_m.h
+	$(Q)-rm -f LogFiles/20131113_1/*_m.cc LogFiles/20131113_1/*_m.h
+	$(Q)-rm -f LogFiles/20131113_2/*_m.cc LogFiles/20131113_2/*_m.h
+	$(Q)-rm -f LogFiles/20131114/*_m.cc LogFiles/20131114/*_m.h
+	$(Q)-rm -f LogFiles/20131115/*_m.cc LogFiles/20131115/*_m.h
+	$(Q)-rm -f LogFiles/20131116/*_m.cc LogFiles/20131116/*_m.h
+	$(Q)-rm -f LogFiles/20131117_1/*_m.cc LogFiles/20131117_1/*_m.h
+	$(Q)-rm -f LogFiles/20131117_2/*_m.cc LogFiles/20131117_2/*_m.h
+	$(Q)-rm -f LogFiles/20131118/*_m.cc LogFiles/20131118/*_m.h
+	$(Q)-rm -f LogFiles/20131121/*_m.cc LogFiles/20131121/*_m.h
 	$(Q)-rm -f LogFiles/2013BassanoTag1/*_m.cc LogFiles/2013BassanoTag1/*_m.h
 	$(Q)-rm -f radio/*_m.cc radio/*_m.h
 	$(Q)-rm -f results/*_m.cc results/*_m.h
@@ -157,6 +187,16 @@ clean:
 	$(Q)-rm -f results/20131105/*_m.cc results/20131105/*_m.h
 	$(Q)-rm -f results/20131111_1/*_m.cc results/20131111_1/*_m.h
 	$(Q)-rm -f results/20131111_2/*_m.cc results/20131111_2/*_m.h
+	$(Q)-rm -f results/20131112/*_m.cc results/20131112/*_m.h
+	$(Q)-rm -f results/20131113_1/*_m.cc results/20131113_1/*_m.h
+	$(Q)-rm -f results/20131113_2/*_m.cc results/20131113_2/*_m.h
+	$(Q)-rm -f results/20131114/*_m.cc results/20131114/*_m.h
+	$(Q)-rm -f results/20131115/*_m.cc results/20131115/*_m.h
+	$(Q)-rm -f results/20131116/*_m.cc results/20131116/*_m.h
+	$(Q)-rm -f results/20131117_1/*_m.cc results/20131117_1/*_m.h
+	$(Q)-rm -f results/20131117_2/*_m.cc results/20131117_2/*_m.h
+	$(Q)-rm -f results/20131118/*_m.cc results/20131118/*_m.h
+	$(Q)-rm -f results/20131121/*_m.cc results/20131121/*_m.h
 	$(Q)-rm -f utils/*_m.cc utils/*_m.h
 
 cleanall: clean
@@ -164,7 +204,7 @@ cleanall: clean
 
 depend:
 	$(qecho) Creating dependencies...
-	$(Q)$(MAKEDEPEND) $(INCLUDE_PATH) -f Makefile -P\$$O/ -- $(MSG_CC_FILES)  ./*.cc LogFiles/*.cc LogFiles/20131104/*.cc LogFiles/20131105/*.cc LogFiles/20131111_1/*.cc LogFiles/20131111_2/*.cc LogFiles/2013BassanoTag1/*.cc radio/*.cc results/*.cc results/20131104/*.cc results/20131105/*.cc results/20131111_1/*.cc results/20131111_2/*.cc utils/*.cc
+	$(Q)$(MAKEDEPEND) $(INCLUDE_PATH) -f Makefile -P\$$O/ -- $(MSG_CC_FILES)  ./*.cc LogFiles/*.cc LogFiles/20131104/*.cc LogFiles/20131105/*.cc LogFiles/20131111_1/*.cc LogFiles/20131111_2/*.cc LogFiles/20131112/*.cc LogFiles/20131113_1/*.cc LogFiles/20131113_2/*.cc LogFiles/20131114/*.cc LogFiles/20131115/*.cc LogFiles/20131116/*.cc LogFiles/20131117_1/*.cc LogFiles/20131117_2/*.cc LogFiles/20131118/*.cc LogFiles/20131121/*.cc LogFiles/2013BassanoTag1/*.cc radio/*.cc results/*.cc results/20131104/*.cc results/20131105/*.cc results/20131111_1/*.cc results/20131111_2/*.cc results/20131112/*.cc results/20131113_1/*.cc results/20131113_2/*.cc results/20131114/*.cc results/20131115/*.cc results/20131116/*.cc results/20131117_1/*.cc results/20131117_2/*.cc results/20131118/*.cc results/20131121/*.cc utils/*.cc
 
 # DO NOT DELETE THIS LINE -- make depend depends on it.
 $O/GliderApplLayer.o: GliderApplLayer.cc \
