@@ -76,7 +76,9 @@ void GliderApplLayer::updateTransmission(void)
 		}
 		else
 		{
-			std::cerr << "Event too far in the past" << endl;
+			std::cerr << "Event too far in the past. SKIPPING" << endl;
+			updateTransmission();
+			return;
 		}
 	}
 
