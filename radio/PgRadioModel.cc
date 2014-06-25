@@ -89,7 +89,7 @@ void PgRadioModel::filterSignal(AirFrame *frame, const Coord& senderPos, const C
 	double lossHor = -kappa * alpha;
 	double lossVert = -zeta * beta;
 
-/*	debugEV << "Add PgRadioModel attenuation parameters (dist,alpha,beta) = (" << dist << "," << alpha << "," << beta << ")" << endl;
+	debugEV << "Add PgRadioModel attenuation parameters (dist,alpha,beta) = (" << dist << "," << alpha << "," << beta << ")" << endl;
 	debugEV << "Loss (lossFreeSpace, lossHor, lossVert) = (" << lossFreeSpace << "," << lossHor << "," << lossVert << ")" << endl;
 
 	std::normal_distribution<double> distribution(0,1);
@@ -101,8 +101,6 @@ void PgRadioModel::filterSignal(AirFrame *frame, const Coord& senderPos, const C
 	double johonsonSL = lambdaJ*exp(distribution(generator)/delta) + xi;
 	debugEV << "Adding "<< johonsonSL << "dB to lossFreeSpace" << endl;
 	lossFreeSpace += johonsonSL;
-*/
-
 
 	sig.addAttenuation(new PgRadioModel::Mapping(lossFreeSpace, lossHor, lossVert, debug));
 }

@@ -131,11 +131,11 @@ void GliderApplLayer::initialize(int stage)
 
 		EV << "Open for write: " << (const char *) par("results") << endl;
  		results.open((const char *)par("results"));
-		results << "Right,Hight,Altitude,Bearing,Rssi,PaketID" << endl;
+		results << "ReceiveTime,Right,Height,Altitude,Bearing,Rssi,PaketID" << endl;
 
 		EV << "Open for write: " << (const char *) par("resultsTx") << endl;
  		resultsTx.open((const char *)par("resultsTx"));
-		resultsTx << "Right,Hight,Altitude,Bearing,Powerlevel,PaketID" << endl;
+		resultsTx << "TransmittTime,Right,Height,Altitude,Bearing,Powerlevel,PaketID" << endl;
 
 
 	}
@@ -168,7 +168,7 @@ void GliderApplLayer::handleSelfMsg(cMessage *msg)
 			//EV<< "@@@@@@ pos: " << pos.x << " "<< pos.y << " "<< pos.z << " " << endl;
 
 			//Right,Hight,Altitude,Bearing,Powerlevel,PaketID
-			resultsTx << pos.x << "," << pos.y << "," << pos.z << "," << mobi->getDirection() << "," << nextLoggedTransmission.pwrLevel << "," <<  nextLoggedTransmission.packetId.c_str() << endl;
+			resultsTx << (int)(simTime().dbl() *1000) << "," << pos.x << "," << mobi->getPlaygroundSizeY() - pos.y << "," << pos.z << "," << mobi->getDirection() << "," << nextLoggedTransmission.pwrLevel << "," <<  nextLoggedTransmission.packetId.c_str() << endl;
 
 		}
 		updateTransmission();
@@ -224,8 +224,8 @@ void GliderApplLayer::handleLowerMsg(cMessage* msg)
 
 		//EV<< "@@@@@@ pos: " << pos.x << " "<< pos.y << " "<< pos.z << " " << endl;
 
-		//Right,Hight,Altitude,Bearing,Rssi,PaketID
-		results << pos.x << "," << pos.y << "," << pos.z << "," << mobi->getDirection() << "," << FWMath::mW2dBm(rssi) << "," <<  m->getName() << endl;
+		//Right,Height,Altitude,Bearing,Rssi,PaketID
+		results << (int)(simTime().dbl() * 1000) << "," << pos.x << "," << mobi->getPlaygroundSizeY() - pos.y << "," << pos.z << "," << mobi->getDirection() << "," << FWMath::mW2dBm(rssi) << "," <<  m->getName() << endl;
 
 		delete msg;
 		return;

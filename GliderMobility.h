@@ -27,10 +27,15 @@ class MIXIM_API GliderMobility :  public LineSegmentsMobilityBase
 {
   private:
     std::ifstream posStream;
+    std::ofstream traceTest;
+
+    /** @brief Timer message for scheduling next message.*/
+    cMessage *selfTimer;
 
   public:
     GliderMobility();
     virtual ~GliderMobility();
+    double getPlaygroundSizeY(void);
 
     double getDirection();
 
@@ -43,6 +48,8 @@ class MIXIM_API GliderMobility :  public LineSegmentsMobilityBase
     void initialize(int stage);
     void finish();
     void evalLog(std::string line);
+
+    void handleSelfMsg(cMessage* msg);
 };
 
 #endif /* GLIDER_H_ */

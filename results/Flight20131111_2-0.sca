@@ -1,0 +1,59 @@
+version 2
+run Flight20131111_2-0-20140625-17:33:15-14676
+attr configname Flight20131111_2
+attr datetime 20140625-17:33:15
+attr experiment Flight20131111_2
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr iterationvars2 $repetition=0
+attr measurement ""
+attr network SkyNet
+attr processid 14676
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+
+scalar SkyNet.node[0].nic.mac 	nbTxFrames 	1909
+scalar SkyNet.node[0].nic.mac 	nbRxFrames 	7121
+scalar SkyNet.node[0].nic.mac 	nbDroppedFrames 	0
+scalar SkyNet.node[0].nic.mac 	nbMissedAcks 	0
+scalar SkyNet.node[0].nic.mac 	nbRecvdAcks 	0
+scalar SkyNet.node[0].nic.mac 	nbTxAcks 	0
+scalar SkyNet.node[0].nic.mac 	nbDuplicates 	0
+scalar SkyNet.node[0].nic.mac 	meanBackoff 	0.0011237716081718
+scalar SkyNet.node[0].nic.mac 	nbBackoffs 	1909
+scalar SkyNet.node[0].nic.mac 	backoffDurations 	2.14528
+scalar SkyNet.node[0].nic.phy 	nbFramesWithInterference 	0
+scalar SkyNet.node[0].nic.phy 	nbFramesWithoutInterference 	7851
+scalar SkyNet.node[0].nic.phy 	nbFramesWithInterferenceDropped 	0
+scalar SkyNet.node[0].nic.phy 	nbFramesWithoutInterferenceDropped 	730
+scalar SkyNet.node[1].nic.mac 	nbTxFrames 	5739
+scalar SkyNet.node[1].nic.mac 	nbRxFrames 	3848
+scalar SkyNet.node[1].nic.mac 	nbDroppedFrames 	0
+scalar SkyNet.node[1].nic.mac 	nbMissedAcks 	0
+scalar SkyNet.node[1].nic.mac 	nbRecvdAcks 	0
+scalar SkyNet.node[1].nic.mac 	nbTxAcks 	0
+scalar SkyNet.node[1].nic.mac 	nbDuplicates 	0
+scalar SkyNet.node[1].nic.mac 	meanBackoff 	0.0011319045129814
+scalar SkyNet.node[1].nic.mac 	nbBackoffs 	5739
+scalar SkyNet.node[1].nic.mac 	backoffDurations 	6.496
+scalar SkyNet.node[1].nic.phy 	nbFramesWithInterference 	0
+scalar SkyNet.node[1].nic.phy 	nbFramesWithoutInterference 	4232
+scalar SkyNet.node[1].nic.phy 	nbFramesWithInterferenceDropped 	0
+scalar SkyNet.node[1].nic.phy 	nbFramesWithoutInterferenceDropped 	384
+scalar SkyNet.node[2].nic.mac 	nbTxFrames 	2514
+scalar SkyNet.node[2].nic.mac 	nbRxFrames 	6612
+scalar SkyNet.node[2].nic.mac 	nbDroppedFrames 	0
+scalar SkyNet.node[2].nic.mac 	nbMissedAcks 	0
+scalar SkyNet.node[2].nic.mac 	nbRecvdAcks 	0
+scalar SkyNet.node[2].nic.mac 	nbTxAcks 	0
+scalar SkyNet.node[2].nic.mac 	nbDuplicates 	0
+scalar SkyNet.node[2].nic.mac 	meanBackoff 	0.0011025616547335
+scalar SkyNet.node[2].nic.mac 	nbBackoffs 	2514
+scalar SkyNet.node[2].nic.mac 	backoffDurations 	2.77184
+scalar SkyNet.node[2].nic.phy 	nbFramesWithInterference 	0
+scalar SkyNet.node[2].nic.phy 	nbFramesWithoutInterference 	7347
+scalar SkyNet.node[2].nic.phy 	nbFramesWithInterferenceDropped 	0
+scalar SkyNet.node[2].nic.phy 	nbFramesWithoutInterferenceDropped 	735

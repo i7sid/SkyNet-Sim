@@ -21,6 +21,7 @@
 #include <iostream>
 #include <string>
 
+#include "csimplemodule.h"
 #include "Position.h"
 #include "LineSegmentsMobilityBase.h"
 #include "GliderMobility.h"
@@ -54,7 +55,7 @@ void GliderMobility::evalLog(std::string line)
 			nextLoggedPosition.x = atof(word.c_str());
 			break;
 		case 2:
-			nextLoggedPosition.y = atof(word.c_str());
+			nextLoggedPosition.y = -atof(word.c_str()) + playgroundSizeY();
 			break;
 		case 3:
 			nextLoggedPosition.z = atof(word.c_str());
@@ -122,6 +123,7 @@ void GliderMobility::setTargetPosition()
 	{
 		EV << "node[" << getParentModule()->getIndex() << "] pos " << "EOF\n";
 		move.setStart(0);       //delete
+		cancelAndDelete(selfTimer); //trace test
 		return;
 	}
 
@@ -131,6 +133,7 @@ void GliderMobility::setTargetPosition()
 	{
 		EV << "node[" << getParentModule()->getIndex() << "] pos " << "string too short\n";
 		move.setSpeed(0);       //delete
+		cancelAndDelete(selfTimer); //trace test
 		return;
 	}
 
@@ -149,6 +152,21 @@ void GliderMobility::setTargetPosition()
 	EV << "targetTime:" << targetTime << " updateInterval: " << updateInterval << endl;
 
 }
+
+void GliderMobility::handleSelfMsg(cMessage* msg)
+{
+	if (msg->getKind() == 31337)
+	{
+		traceTest << simTime() << "," << targetPos.x << "," << playgroundSizeY() - targetPos.y << "," << targetPos.z << "," << getCurrentPosition().x << "," << playgroundSizeY() - getCurrentPosition().y << ","<< getCurrentPosition().z << endl;
+
+		scheduleAt(simTime() + 0.25, selfTimer);
+	}
+	else
+	{
+		LineSegmentsMobilityBase::handleSelfMsg(msg);
+	}
+}
+
 
 void GliderMobility::initialize(int stage)
 {
@@ -183,13 +201,26 @@ void GliderMobility::initialize(int stage)
 
 		//EV << "Startpos: " << nextLoggedPosition.x << "," << nextLoggedPosition.y << "," << nextLoggedPosition.z << endl;
 
+		//Mobility test
 		beginNextMove(new cMessage("self", 0));
+		const char *fileTrace = par("traceTest");
+		traceTest.open(fileTrace);
+		if (!traceTest.is_open())
+		{
+			EV << "Trace file " << fileTrace << " for glider[" << getParentModule()->getIndex() << "] unable to open\n";
+			endSimulation();
+		}
+		traceTest << "simtime, targetX, targetY,  targetZ, currentX, currentY, currentZ" << endl;
+
+		selfTimer = new cMessage("delay-timer", 31337);
+		scheduleAt(0.25, selfTimer);
 	}
 }
 
 void GliderMobility::finish()
 {
 	EV << "node[" << getParentModule()->getIndex() << "] mobility finished" << endl;
+	traceTest.close();
 }
 
 void GliderMobility::fixIfHostGetsOutside()
@@ -200,4 +231,9 @@ void GliderMobility::fixIfHostGetsOutside()
 double GliderMobility::getDirection(void)
 {
 	return nextLoggedPosition.direction;				//TODO fade linearly
+}
+
+double GliderMobility::getPlaygroundSizeY(void)
+{
+	return playgroundSizeY();
 }

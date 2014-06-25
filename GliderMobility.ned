@@ -23,6 +23,7 @@ simple GliderMobility extends BaseMobility
     parameters:
         @class(GliderMobility);
         string posFile = default("");
+        string traceTest = default("");
         double updateInterval @unit("s") = default(0.1s);
         
 }
