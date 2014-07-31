@@ -100,7 +100,7 @@ void PgRadioModel::filterSignal(AirFrame *frame, const Coord& senderPos, const C
 
 	double johonsonSL = lambdaJ*exp(distribution(generator)/delta) + xi;
 	debugEV << "Adding "<< johonsonSL << "dB to lossFreeSpace" << endl;
-	lossFreeSpace += johonsonSL;
+	//lossFreeSpace -= johonsonSL;
 
 	sig.addAttenuation(new PgRadioModel::Mapping(lossFreeSpace, lossHor, lossVert, debug));
 }

@@ -230,7 +230,7 @@ void GliderMobility::fixIfHostGetsOutside()
 
 double GliderMobility::getDirection(void)
 {
-	return nextLoggedPosition.direction;				//TODO fade linearly
+	return nextLoggedPosition.direction-90;				//TODO fade linearly
 }
 
 double GliderMobility::getPlaygroundSizeY(void)

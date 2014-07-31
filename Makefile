@@ -45,6 +45,7 @@ INCLUDE_PATH = \
     -ILogFiles/20131118 \
     -ILogFiles/20131121 \
     -ILogFiles/2013BassanoTag1 \
+    -Ienvironment \
     -Iradio \
     -Iresults \
     -Iresults/20131104 \
@@ -79,9 +80,14 @@ O = $(PROJECT_OUTPUT_DIR)/$(CONFIGNAME)/$(PROJECTRELATIVE_PATH)
 OBJS = \
     $O/GliderApplLayer.o \
     $O/GliderMobility.o \
+    $O/GliderMobilityA.o \
     $O/Position.o \
     $O/PositionMessage.o \
     $O/Transmission.o \
+    $O/environment/Thermal.o \
+    $O/environment/ThermalChildress.o \
+    $O/environment/ThermalManager.o \
+    $O/environment/WindManager.o \
     $O/radio/PgMacLayer.o \
     $O/radio/PgPhyLayer.o \
     $O/radio/PgRadioModel.o \
@@ -181,6 +187,7 @@ clean:
 	$(Q)-rm -f LogFiles/20131118/*_m.cc LogFiles/20131118/*_m.h
 	$(Q)-rm -f LogFiles/20131121/*_m.cc LogFiles/20131121/*_m.h
 	$(Q)-rm -f LogFiles/2013BassanoTag1/*_m.cc LogFiles/2013BassanoTag1/*_m.h
+	$(Q)-rm -f environment/*_m.cc environment/*_m.h
 	$(Q)-rm -f radio/*_m.cc radio/*_m.h
 	$(Q)-rm -f results/*_m.cc results/*_m.h
 	$(Q)-rm -f results/20131104/*_m.cc results/20131104/*_m.h
@@ -204,7 +211,7 @@ cleanall: clean
 
 depend:
 	$(qecho) Creating dependencies...
-	$(Q)$(MAKEDEPEND) $(INCLUDE_PATH) -f Makefile -P\$$O/ -- $(MSG_CC_FILES)  ./*.cc LogFiles/*.cc LogFiles/20131104/*.cc LogFiles/20131105/*.cc LogFiles/20131111_1/*.cc LogFiles/20131111_2/*.cc LogFiles/20131112/*.cc LogFiles/20131113_1/*.cc LogFiles/20131113_2/*.cc LogFiles/20131114/*.cc LogFiles/20131115/*.cc LogFiles/20131116/*.cc LogFiles/20131117_1/*.cc LogFiles/20131117_2/*.cc LogFiles/20131118/*.cc LogFiles/20131121/*.cc LogFiles/2013BassanoTag1/*.cc radio/*.cc results/*.cc results/20131104/*.cc results/20131105/*.cc results/20131111_1/*.cc results/20131111_2/*.cc results/20131112/*.cc results/20131113_1/*.cc results/20131113_2/*.cc results/20131114/*.cc results/20131115/*.cc results/20131116/*.cc results/20131117_1/*.cc results/20131117_2/*.cc results/20131118/*.cc results/20131121/*.cc utils/*.cc
+	$(Q)$(MAKEDEPEND) $(INCLUDE_PATH) -f Makefile -P\$$O/ -- $(MSG_CC_FILES)  ./*.cc LogFiles/*.cc LogFiles/20131104/*.cc LogFiles/20131105/*.cc LogFiles/20131111_1/*.cc LogFiles/20131111_2/*.cc LogFiles/20131112/*.cc LogFiles/20131113_1/*.cc LogFiles/20131113_2/*.cc LogFiles/20131114/*.cc LogFiles/20131115/*.cc LogFiles/20131116/*.cc LogFiles/20131117_1/*.cc LogFiles/20131117_2/*.cc LogFiles/20131118/*.cc LogFiles/20131121/*.cc LogFiles/2013BassanoTag1/*.cc environment/*.cc radio/*.cc results/*.cc results/20131104/*.cc results/20131105/*.cc results/20131111_1/*.cc results/20131111_2/*.cc results/20131112/*.cc results/20131113_1/*.cc results/20131113_2/*.cc results/20131114/*.cc results/20131115/*.cc results/20131116/*.cc results/20131117_1/*.cc results/20131117_2/*.cc results/20131118/*.cc results/20131121/*.cc utils/*.cc
 
 # DO NOT DELETE THIS LINE -- make depend depends on it.
 $O/GliderApplLayer.o: GliderApplLayer.cc \
@@ -247,6 +254,23 @@ $O/GliderMobility.o: GliderMobility.cc \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/Move.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/miximkerneldefs.h \
 	$(MIXIM_SOMMER_PROJ)/src/modules/mobility/LineSegmentsMobilityBase.h
+$O/GliderMobilityA.o: GliderMobilityA.cc \
+	GliderMobilityA.h \
+	Position.h \
+	environment/ThermalChildress.h \
+	environment/ThermalManager.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/modules/BaseBattery.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/modules/BaseMobility.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/modules/BaseModule.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/modules/BaseWorldUtility.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/modules/BatteryAccess.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/Coord.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/FWMath.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/FindModule.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/MiXiMDefs.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/Move.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/miximkerneldefs.h \
+	$(MIXIM_SOMMER_PROJ)/src/modules/mobility/LinearMobility.h
 $O/Position.o: Position.cc \
 	Position.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/Coord.h \
@@ -262,6 +286,41 @@ $O/PositionMessage.o: PositionMessage.cc \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/miximkerneldefs.h
 $O/Transmission.o: Transmission.cc \
 	Transmission.h
+$O/environment/Thermal.o: environment/Thermal.cc \
+	environment/Thermal.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/Coord.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/FWMath.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/FindModule.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/MiXiMDefs.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/miximkerneldefs.h
+$O/environment/ThermalChildress.o: environment/ThermalChildress.cc \
+	environment/ThermalChildress.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/Coord.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/FWMath.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/MiXiMDefs.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/miximkerneldefs.h
+$O/environment/ThermalManager.o: environment/ThermalManager.cc \
+	GliderMobilityA.h \
+	Position.h \
+	environment/ThermalChildress.h \
+	environment/ThermalManager.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/modules/BaseBattery.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/modules/BaseMobility.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/modules/BaseModule.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/modules/BaseWorldUtility.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/modules/BatteryAccess.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/Coord.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/FWMath.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/MiXiMDefs.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/Move.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/miximkerneldefs.h
+$O/environment/WindManager.o: environment/WindManager.cc \
+	environment/WindManager.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/modules/BaseModule.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/Coord.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/FWMath.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/MiXiMDefs.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/miximkerneldefs.h
 $O/radio/PgMacLayer.o: radio/PgMacLayer.cc \
 	radio/PgMacLayer.h \
 	utils/PgNetwToMacControlInfo.h \
