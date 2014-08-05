@@ -10,6 +10,8 @@
 
 #include "Coord.h"
 
+#include "WindManager.h"
+
 enum DDT
 {
 	NO_DOWNDRAFT,
@@ -20,31 +22,22 @@ enum DDT
 class ThermalChildress
 {
 private:
-	Coord pos;
+	//Coord pos;
 	double zi;				//CBL height in m
 	double Ts;				// Surface Temperature in Deg K	typ: 300.15
 	double heatflux;			//Kinematic heat flux (Deg K*m/s). typ: 0.4
 	int downdraftType;
 	bool invert;
+	WindManager *wind;
+	Coord pos[4000];
 
 public:
 	double upDraft(Coord gliderPos);
 	Coord positionAtAltitude(double z);
+	void updateThermalPos(void);
 
-	ThermalChildress(Coord pos, double zi, double Ts, double heatflux, int downdraftType, bool invert):
-	pos(pos), zi(zi), Ts(Ts), heatflux(heatflux), downdraftType(downdraftType), invert(invert)
-	{
-
-	};
-
-
-	ThermalChildress(Coord pos, double zi, int downdraftType):
-	pos(pos), zi(zi), downdraftType(downdraftType)
-	{
-		invert = false;
-		heatflux = 0.4;
-		Ts = 300.15;
-	};
+	ThermalChildress(Coord posG, double zi, double Ts, double heatflux, int downdraftType, bool invert);
+	ThermalChildress(Coord posG, double zi, int downdraftType);
 
 	virtual ~ThermalChildress()
 	{

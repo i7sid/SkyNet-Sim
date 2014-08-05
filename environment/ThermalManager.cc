@@ -13,13 +13,17 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
+#include <fstream>
+
 #include <omnetpp.h>
 
-
-#include <environment/ThermalChildress.h>
-#include <environment/ThermalManager.h>
 #include "BaseModule.h"
-#include "GliderMobilityA.h"
+#include "FindModule.h"
+
+#include "ThermalManager.h"
+#include "ThermalChildress.h"
+#include "WindManager.h"
+
 
 Define_Module(ThermalManager);
 
@@ -46,10 +50,6 @@ void ThermalManager::initialize(int stage)
 	}
 	else if (stage == 1)
 	{
-//		GliderMobilityA* mobi = FindModule<GliderMobilityA*>::findSubModule(getParentModule());
-//		ASSERT(mobi);
-//		double playgroundArea = mobi->getPlaygroundArea();
-
 		thermals.push_back(ThermalChildress(Coord(2500, 2500, 0), 1500, OUTER_DOWNDRAFT));
 
 		ThermalChildress thermal = thermals.front();
@@ -67,6 +67,17 @@ void ThermalManager::initialize(int stage)
 				results << x << "," << "2500" << "," << z << "," << updraft << endl;
 				//EV<<  "z: " << z << " updraft: " << updraft << endl;
 			}
+		}
+		results.close();
+
+ 		results.open("results/thermalpos.csv");
+		results << "x,y,z" << endl;
+
+		for(int z=0; z<3000; z+=1)
+		{
+			Coord pos = thermal.positionAtAltitude(z);
+			results << pos.x << "," << pos.y << "," << pos.z << endl;
+			//EV<<  "z: " << z << " updraft: " << updraft << endl;
 		}
 		results.close();
 	}

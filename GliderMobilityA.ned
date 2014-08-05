@@ -23,7 +23,7 @@ simple GliderMobilityA extends BaseMobility
     parameters:
         @class(GliderMobilityA);
         double angle @unit(deg);        
-       	double speed @unit(mps) = default(10.0mps); // speed of the host (in m/s)
+       	double airSpeed @unit(mps) = default(10.0mps); // speed of the host (in m/s)
        	double climbRate @unit(mps) = default(-1.3mps); // sinkrate of the host (in m/s)
        	double secondsPerRotation @unit("s") = default(20.0s); // seconds per rotation
         double acceleration @unit(mpss) = default(0.0mpss); // acceleration of linear motion (m/s2)

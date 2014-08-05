@@ -4,12 +4,91 @@
  *  Created on: Jul 21, 2014
  *      Author: eckert
  */
+#include <FindModule.h>
 
-#include <ThermalChildress.h>
+#include "WindManager.h"
+#include "ThermalChildress.h"
+
+
+//todo start and stop thermal
+
+ThermalChildress::ThermalChildress(Coord posG, double zi, double Ts, double heatflux, int downdraftType, bool invert) :
+		zi(zi), Ts(Ts), heatflux(heatflux), downdraftType(downdraftType), invert(invert)
+{
+	pos[0] = posG;
+
+	wind = FindModule<WindManager*>::findGlobalModule();
+	ASSERT(wind);
+
+	updateThermalPos();
+}
+
+ThermalChildress::ThermalChildress(Coord posG, double zi, int downdraftType) :
+		zi(zi), downdraftType(downdraftType)
+{
+	pos[0] = posG;
+
+	wind = FindModule<WindManager*>::findGlobalModule();
+	ASSERT(wind);
+
+	invert = false;
+	heatflux = 0.4;
+	Ts = 300.15;
+
+	updateThermalPos();
+}
+
+void ThermalChildress::updateThermalPos(void)
+{
+	for(int z=1; z<=zi; z++)
+	{
+		Coord windDrift = wind->getWind(Coord(0,0,z));
+		double zstar = z / zi;
+
+		// Thermal Diameter terms
+		double dt = zi * (0.4 * pow(zstar, 1.0 / 3.0)) * (1 - (0.5 * zstar)) + ((((zstar - 0.6) * zstar * z)) / PI);
+
+		// Convection Cell core growth term
+		double d1 = 0.17 * dt + 0.5 * (zstar - 0.6) * dt;
+		double d2 = dt;
+		double r1 = d1 / 2;
+		double r2 = d2 / 2;
+
+		// Deardorff Velocity Scale
+		double x = zi * heatflux * (9.86 / Ts);
+		double wstar = pow(x, 1.0 / 3.0);
+
+		// Average Vertical Velocity
+		double wtavg = wstar * pow(zstar, 1.0 / 3.0) * (1 - (1.1 * zstar));
+
+		//Peak Vertical Velocity
+		double wpeak = ((3 * wtavg) * (pow(r2, 3) - (pow(r2, 2) * r1))) / (pow(r2, 3) - pow(r1, 3));
+
+		EV << "z=" << z <<" wpeak=" << wpeak << endl;
+
+		//avoid drift to infinity
+		if(wpeak <  windDrift.length()/ 20)
+		{
+			pos[z] = pos[z-1];
+			continue;
+		}
+
+		pos[z] = pos[z-1] + (windDrift / wpeak);
+	}
+
+}
 
 Coord ThermalChildress::positionAtAltitude(double z)
 {
-	return(Coord(pos.x, pos.y, z));	//add wind here
+	int idx = 0;
+	if(z > 3999)
+		idx = 3999;
+	else if(z < 0)
+		idx = 0;
+	else
+		idx = (int) z;
+
+	return (Coord(pos[idx].x, pos[idx].y, z));	//add wind here
 
 }
 
@@ -22,63 +101,62 @@ double ThermalChildress::upDraft(Coord gliderPos)
 	double dist = thermalPos.distance(gliderPos);
 	double z = gliderPos.z;
 
-	double zstar = z/zi;
+	double zstar = z / zi;
 
 	// Thermal Diameter terms
-	double dt = zi*(0.4*pow(zstar,1.0/3.0)) * (1-(0.5*zstar)) + ((((zstar-0.6)*zstar*z))/PI);
+	double dt = zi * (0.4 * pow(zstar, 1.0 / 3.0)) * (1 - (0.5 * zstar)) + ((((zstar - 0.6) * zstar * z)) / PI);
 
 	// Convection Cell core growth term
-	double d1 = 0.17*dt + 0.5*(zstar-0.6)*dt;
+	double d1 = 0.17 * dt + 0.5 * (zstar - 0.6) * dt;
 	double d2 = dt;
-	double r1 = d1/2;
-	double r2 = d2/2;
+	double r1 = d1 / 2;
+	double r2 = d2 / 2;
 
 	// vertical velocity terms
 
 	// Deardorff Velocity Scale
-	double x = zi * heatflux * (9.86/Ts);
-	double wstar = pow(x, 1.0/3.0);
+	double x = zi * heatflux * (9.86 / Ts);
+	double wstar = pow(x, 1.0 / 3.0);
 
 	// Average Vertical Velocity
-	double wtavg = wstar * pow(zstar, 1.0/3.0) * (1-(1.1*zstar));
+	double wtavg = wstar * pow(zstar, 1.0 / 3.0) * (1 - (1.1 * zstar));
 
 	//Peak Vertical Velocity
-	double wpeak = ((3*wtavg)*(pow(r2, 3)-(pow(r2, 2) * r1))) / (pow(r2, 3) - pow(r1, 3));
-
+	double wpeak = ((3 * wtavg) * (pow(r2, 3) - (pow(r2, 2) * r1))) / (pow(r2, 3) - pow(r1, 3));
 
 	//Downdraft Core formation and dimensionless deceleration term
-	double wd = (-zi/(1.275 * pow(wstar, 2))) * (0.04/(z/304.8));
-	double wcore = (wd*(zstar+0.45)) - (wpeak*0.5);
+	double wd = (-zi / (1.275 * pow(wstar, 2))) * (0.04 / (z / 304.8));
+	double wcore = (wd * (zstar + 0.45)) - (wpeak * 0.5);
 
 	// vertical velocity vs. radius plots
-	double rt = dt/2;
+	double rt = dt / 2;
 
 	double w = 0;
-	if(zstar < 1.0)
+	if (zstar < 1.0)
 	{
-		if(dist <= rt)
-			w = wpeak*cos((dist/rt)*(PI/2));
+		if (dist <= rt)
+			w = wpeak * cos((dist / rt) * (PI / 2));
 
-		switch(downdraftType)
+		switch (downdraftType)
 		{
 		case NO_DOWNDRAFT:
 			break;
 		case CENTER_DOWNDRAFT:
-		if(zstar > .500  && dist <= r1)
-			w += wcore*cos((dist/r1)*(PI/2));
+			if (zstar > .500 && dist <= r1)
+				w += wcore * cos((dist / r1) * (PI / 2));
 			break;
 		case OUTER_DOWNDRAFT:
-		if(abs(dist-rt) <= r1)
-			w += wcore*cos(((dist-rt)/r1)*(PI/2)) * 0.5;
+			if (abs(dist - rt) <= r1)
+				w += wcore * cos(((dist - rt) / r1) * (PI / 2)) * 0.5;
 			break;
 		}
 
 	}
-    	else if(zstar > 1.0)
-    	{
-    		w = 0;
-    	}
-	if(invert)
+	else if (zstar > 1.0)
+	{
+		w = 0;
+	}
+	if (invert)
 		return -w;
 	else
 		return w;

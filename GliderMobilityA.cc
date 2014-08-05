@@ -27,6 +27,7 @@
 //#include "BaseMobility.h"
 #include "GliderMobilityA.h"
 #include "ThermalManager.h"
+#include "WindManager.h"
 #include "FindModule.h"
 
 Define_Module(GliderMobilityA);
@@ -59,11 +60,17 @@ void GliderMobilityA::makeMove()
 	ambientAirFlow = thermals->getAirFlow(move.getStartPos()).z;		//for now, we only use the z axis
 	climbState = climbRate + ambientAirFlow;
 
-	stepTarget.x = (move.getStartPos().x + move.getSpeed() * cos(PI * angle / 180) * SIMTIME_DBL(updateInterval));
-	stepTarget.y = (move.getStartPos().y + move.getSpeed() * sin(PI * angle / 180) * SIMTIME_DBL(updateInterval));
+	Coord w = wind->getWind(move.getStartPos());
+
+	stepTarget.x = (move.getStartPos().x + (((airSpeed * cos(PI * angle / 180)) + w.x) * SIMTIME_DBL(updateInterval)));
+	stepTarget.y = (move.getStartPos().y + (((airSpeed * sin(PI * angle / 180)) + w.y) * SIMTIME_DBL(updateInterval)));
 	stepTarget.z = (move.getStartPos().z + climbState * SIMTIME_DBL(updateInterval));
 
 	move.setDirectionByTarget(stepTarget);
+	move.setSpeed(stepTarget.distance(move.getStartPos()) / SIMTIME_DBL(updateInterval));
+
+	if(move.getSpeed() == 0)
+		move.setSpeed(0.0001);	//workaround in order to avoid end of mobility
 
 	debugEV << "new stepTarget: " << stepTarget.info() << endl;
 
@@ -72,6 +79,9 @@ void GliderMobilityA::makeMove()
 		EV << "node[" << getParentModule()->getIndex() << "] touched ground. STOPPING" << endl;
 		move.setSpeed(0);
 	}
+
+	traceTest << simTime() << "," << move.getStartPos().x << "," << playgroundSizeY() - move.getStartPos().y << "," << move.getStartPos().z << "," << getCourse() << "," << climbState<< "," << move.getSpeed() << " " << w.x << " " << w.y << endl;
+
 
 	fixIfHostGetsOutside();
 }
@@ -103,9 +113,10 @@ void GliderMobilityA::initialize(int stage)
 
 	if (stage == 0)
 	{
-
-	        move.setSpeed(par("speed").doubleValue());
+		airSpeed = par("airSpeed").doubleValue();
+	        move.setSpeed(airSpeed);
 	        angle = par("angle");
+	        angle -= 90;
 	        angle = fmod(angle,360);
 	        climbRate = par("climbRate");
 	        secondsPerRotation = par("secondsPerRotation");
@@ -125,7 +136,7 @@ void GliderMobilityA::initialize(int stage)
 			EV << "Trace file " << fileTrace << " for glider[" << getParentModule()->getIndex() << "] unable to open for write\n";
 			endSimulation();
 		}
-		traceTest << "simtime,x,y,z,angle,climb" << endl;
+		traceTest << "simtime,x,y,z,course,climb,v" << endl;
 
 		selfTimer = new cMessage("delay-timer", 31337);
 		scheduleAt(traceInterval, selfTimer);
@@ -133,6 +144,8 @@ void GliderMobilityA::initialize(int stage)
 
 		thermals = FindModule<ThermalManager*>::findGlobalModule();
 		ASSERT(thermals);
+		wind = FindModule<WindManager*>::findGlobalModule();
+		ASSERT(wind);
 
 	}
 }
@@ -151,10 +164,10 @@ void GliderMobilityA::fixIfHostGetsOutside()
 }
 
 
-//todo
-double GliderMobilityA::getDirection(void)
+double GliderMobilityA::getCourse(void)
 {
-	return 0; //nextLoggedPosition.direction-90;				//TODO fade linearly
+	Coord dir = move.getDirection();
+	return fmod((atan2(dir.y, dir.x) * 180.0 / PI) + 90,360);
 }
 
 double GliderMobilityA::getPlaygroundArea()

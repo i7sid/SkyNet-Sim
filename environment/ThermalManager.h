@@ -21,7 +21,9 @@
 #include "MiXiMDefs.h"
 #include "BaseModule.h"
 #include "Coord.h"
-#include <ThermalChildress.h>
+#include "ThermalChildress.h"
+#include "WindManager.h"
+
 
 class MIXIM_API ThermalManager: public BaseModule
 {

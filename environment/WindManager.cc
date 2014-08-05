@@ -54,7 +54,7 @@ Coord WindManager::getWind(Coord pos)
 	double angle = windd - 90;
 
 	wind.x = -cos(PI * angle / 180) * windv;
-	wind.y = sin(PI * angle / 180) * windv;
+	wind.y = -sin(PI * angle / 180) * windv;
 	wind.z = 0;
 
 	return wind;

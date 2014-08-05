@@ -259,6 +259,7 @@ $O/GliderMobilityA.o: GliderMobilityA.cc \
 	Position.h \
 	environment/ThermalChildress.h \
 	environment/ThermalManager.h \
+	environment/WindManager.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/modules/BaseBattery.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/modules/BaseMobility.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/modules/BaseModule.h \
@@ -295,24 +296,22 @@ $O/environment/Thermal.o: environment/Thermal.cc \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/miximkerneldefs.h
 $O/environment/ThermalChildress.o: environment/ThermalChildress.cc \
 	environment/ThermalChildress.h \
+	environment/WindManager.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/modules/BaseModule.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/Coord.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/FWMath.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/FindModule.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/MiXiMDefs.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/miximkerneldefs.h
 $O/environment/ThermalManager.o: environment/ThermalManager.cc \
-	GliderMobilityA.h \
-	Position.h \
 	environment/ThermalChildress.h \
 	environment/ThermalManager.h \
-	$(MIXIM_SOMMER_PROJ)/src/base/modules/BaseBattery.h \
-	$(MIXIM_SOMMER_PROJ)/src/base/modules/BaseMobility.h \
+	environment/WindManager.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/modules/BaseModule.h \
-	$(MIXIM_SOMMER_PROJ)/src/base/modules/BaseWorldUtility.h \
-	$(MIXIM_SOMMER_PROJ)/src/base/modules/BatteryAccess.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/Coord.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/FWMath.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/FindModule.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/MiXiMDefs.h \
-	$(MIXIM_SOMMER_PROJ)/src/base/utils/Move.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/miximkerneldefs.h
 $O/environment/WindManager.o: environment/WindManager.cc \
 	environment/WindManager.h \

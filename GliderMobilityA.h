@@ -22,7 +22,8 @@
 #include "MiXiMDefs.h"
 #include "BaseMobility.h"
 #include "Position.h"
-#include <environment/ThermalManager.h>
+#include "ThermalManager.h"
+#include "WindManager.h"
 
 class MIXIM_API GliderMobilityA :  public BaseMobility
 {
@@ -34,6 +35,7 @@ class MIXIM_API GliderMobilityA :  public BaseMobility
     double angle;          ///< angle of linear motion
     double climbRate;
     double secondsPerRotation;
+    double airSpeed;
 
     /** @brief always stores the last step for position display update */
     Coord stepTarget;
@@ -43,12 +45,13 @@ class MIXIM_API GliderMobilityA :  public BaseMobility
     double traceInterval;
 
     ThermalManager* thermals;
+    WindManager* wind;
 
   public:
     GliderMobilityA();
     virtual ~GliderMobilityA();
 
-    double getDirection();
+    double getCourse();
     double getPlaygroundArea();
 
   protected:
