@@ -50,7 +50,7 @@ void ThermalManager::initialize(int stage)
 	}
 	else if (stage == 1)
 	{
-		thermals.push_back(ThermalChildress(Coord(2500, 2500, 0), 1500, OUTER_DOWNDRAFT));
+		thermals.push_back(ThermalChildress(Coord(2500, 2500, 0), 2000, NO_DOWNDRAFT));
 
 		ThermalChildress thermal = thermals.front();
 
