@@ -32,6 +32,6 @@ simple GliderMobilityA extends BaseMobility
         string traceTest = default("");
         double traceInterval @unit("s") = default(0.25s);
         
-        
+        double experience = default(1.0);
 }
 

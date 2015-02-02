@@ -2,7 +2,7 @@
 # OMNeT++/OMNEST Makefile for SkyNet
 #
 # This file was generated with the command:
-#  opp_makemake -f --deep -O out -I../mixim-sommer/src/modules/analogueModel -I../mixim-sommer/src/modules/phy -I../mixim-sommer/src/modules/mac/ieee80211p -I../mixim-sommer/src/modules/mobility -I../mixim-sommer/src/modules/messages -I../mixim-sommer/src/base/utils -I../mixim-sommer/src/base/phyLayer -I../mixim-sommer/src/modules/utility -I../mixim-sommer/src/modules -I../mixim-sommer/src/base/modules -I../mixim-sommer/src/base/messages -I../mixim-sommer/src/modules/obstacle -I../mixim-sommer/src/base/connectionManager -L../mixim-sommer/out/$$\(CONFIGNAME\)/src/modules -L../mixim-sommer/out/$$\(CONFIGNAME\)/src/base -L../mixim-sommer/out/$$\(CONFIGNAME\)/tests/testUtils -lmiximmodules -lmiximbase -lmiximtestUtils -KMIXIM_SOMMER_PROJ=../mixim-sommer
+#  opp_makemake -f --deep -O out -I../mixim-sommer/src/base/modules -I../mixim-sommer/src/base/utils -I../mixim-sommer/src/base/phyLayer -I../mixim-sommer/src/base/messages -I../mixim-sommer/src/base/connectionManager -I../mixim-sommer/src/modules/mac/ieee80211p -I../mixim-sommer/src/modules -I../mixim-sommer/src/modules/analogueModel -I../mixim-sommer/src/modules/mobility -I../mixim-sommer/src/modules/phy -I../mixim-sommer/src/modules/messages -I../mixim-sommer/src/modules/obstacle -I../mixim-sommer/src/modules/utility -L../mixim-sommer/out/$$\(CONFIGNAME\)/src/modules -L../mixim-sommer/out/$$\(CONFIGNAME\)/tests/testUtils -L../mixim-sommer/out/$$\(CONFIGNAME\)/src/base -lmiximmodules -lmiximtestUtils -lmiximbase -KMIXIM_SOMMER_PROJ=../mixim-sommer
 #
 
 # Name of target to be created (-o option)
@@ -15,19 +15,19 @@ USERIF_LIBS = $(ALL_ENV_LIBS) # that is, $(TKENV_LIBS) $(CMDENV_LIBS)
 
 # C++ include paths (with -I)
 INCLUDE_PATH = \
-    -I../mixim-sommer/src/modules/analogueModel \
-    -I../mixim-sommer/src/modules/phy \
-    -I../mixim-sommer/src/modules/mac/ieee80211p \
-    -I../mixim-sommer/src/modules/mobility \
-    -I../mixim-sommer/src/modules/messages \
+    -I../mixim-sommer/src/base/modules \
     -I../mixim-sommer/src/base/utils \
     -I../mixim-sommer/src/base/phyLayer \
-    -I../mixim-sommer/src/modules/utility \
-    -I../mixim-sommer/src/modules \
-    -I../mixim-sommer/src/base/modules \
     -I../mixim-sommer/src/base/messages \
-    -I../mixim-sommer/src/modules/obstacle \
     -I../mixim-sommer/src/base/connectionManager \
+    -I../mixim-sommer/src/modules/mac/ieee80211p \
+    -I../mixim-sommer/src/modules \
+    -I../mixim-sommer/src/modules/analogueModel \
+    -I../mixim-sommer/src/modules/mobility \
+    -I../mixim-sommer/src/modules/phy \
+    -I../mixim-sommer/src/modules/messages \
+    -I../mixim-sommer/src/modules/obstacle \
+    -I../mixim-sommer/src/modules/utility \
     -I. \
     -ILogFiles \
     -ILogFiles/20131104 \
@@ -68,8 +68,8 @@ INCLUDE_PATH = \
 EXTRA_OBJS =
 
 # Additional libraries (-L, -l options)
-LIBS = -L../mixim-sommer/out/$(CONFIGNAME)/src/modules -L../mixim-sommer/out/$(CONFIGNAME)/src/base -L../mixim-sommer/out/$(CONFIGNAME)/tests/testUtils  -lmiximmodules -lmiximbase -lmiximtestUtils
-LIBS += -Wl,-rpath,`abspath ../mixim-sommer/out/$(CONFIGNAME)/src/modules` -Wl,-rpath,`abspath ../mixim-sommer/out/$(CONFIGNAME)/src/base` -Wl,-rpath,`abspath ../mixim-sommer/out/$(CONFIGNAME)/tests/testUtils`
+LIBS = -L../mixim-sommer/out/$(CONFIGNAME)/src/modules -L../mixim-sommer/out/$(CONFIGNAME)/tests/testUtils -L../mixim-sommer/out/$(CONFIGNAME)/src/base  -lmiximmodules -lmiximtestUtils -lmiximbase
+LIBS += -Wl,-rpath,`abspath ../mixim-sommer/out/$(CONFIGNAME)/src/modules` -Wl,-rpath,`abspath ../mixim-sommer/out/$(CONFIGNAME)/tests/testUtils` -Wl,-rpath,`abspath ../mixim-sommer/out/$(CONFIGNAME)/src/base`
 
 # Output directory
 PROJECT_OUTPUT_DIR = out

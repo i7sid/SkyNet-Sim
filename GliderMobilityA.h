@@ -39,6 +39,8 @@ class MIXIM_API GliderMobilityA :  public BaseMobility
 
     double turn;	//turn in degree / second
 
+    double experience;
+
     /** @brief always stores the last step for position display update */
     Coord stepTarget;
     double climbState;

@@ -60,15 +60,23 @@ void GliderMobilityA::makeMove()
 	move.setStart(stepTarget, simTime());
 
 	double ambientAirFlow = thermals->getAirFlow(move.getStartPos()).z;		//for now, we only use the z axis
+	double stepsize = 3 * SIMTIME_DBL(updateInterval);	//degree per second
+
 	if (ambientAirFlow <= 0)		//thermal lost
 	{
-		turn = 0;		// at least for now
+		if(abs(turn) > stepsize)
+		{
+			turn = sgn(turn) * (abs(turn) - stepsize);
+		}
+		else
+		{
+			turn = 0;		// at least for now
+		}
 	}
 	else if (turn == 0)		//entering thermal, deciding direction
 	{
 		Coord leftPos = Coord(move.getStartPos().x + (10 * cos(PI * (angle - 90) / 180)), move.getStartPos().y + (10 * sin(PI * (angle - 90) / 180)), move.getStartPos().z);
-		Coord rightPos = Coord(move.getStartPos().x + (10 * cos(PI * (angle + 90) / 180)), move.getStartPos().y + (10 * sin(PI * (angle + 90) / 180)),
-				move.getStartPos().z);
+		Coord rightPos = Coord(move.getStartPos().x + (10 * cos(PI * (angle + 90) / 180)), move.getStartPos().y + (10 * sin(PI * (angle + 90) / 180)), move.getStartPos().z);
 		double left = thermals->getAirFlow(leftPos).z;
 		double right = thermals->getAirFlow(rightPos).z;
 
@@ -83,25 +91,30 @@ void GliderMobilityA::makeMove()
 	}
 	else				//we are thermaling
 	{
-		double stepsize = 3 * SIMTIME_DBL(updateInterval);	//degree per second
+		double human_factor = uniform(0,1,0);
 
-		if (ambientAirFlow >= ambientAirFlowLast)		//found stronger area, reduce turn
+		if(human_factor <= experience)
 		{
-			if (abs(turn) > stepsize)
+			if (ambientAirFlow > ambientAirFlowLast)		//found stronger area, reduce turn
 			{
-				turn = sgn(turn) * (abs(turn) - stepsize);
+				if (abs(turn) > stepsize)
+				{
+					turn = sgn(turn) * (abs(turn) - stepsize);
+				}
 			}
-		}
-		else if (ambientAirFlow < ambientAirFlowLast)	//found weaker area, increase turn
-		{
-			//if (abs(turn) < 36)		//10sec turn
-			if(ambientAirFlowLast + (-0.0009723 * pow(abs(turn), 2)) > ambientAirFlow + (-0.0009723 * pow(abs(sgn(turn) * (abs(turn) + stepsize)), 2)) )
+			else if (ambientAirFlow < ambientAirFlowLast)	//found weaker area, increase turn
 			{
-				turn = sgn(turn) * (abs(turn) + stepsize);
-			}
+				//if (abs(turn) < 36)		//10sec turn
+				if(ambientAirFlowLast + (-0.0009723 * pow(abs(turn), 2)) > ambientAirFlow + (-0.0009723 * pow(abs(sgn(turn) * (abs(turn) + stepsize)), 2)) )
+				{
+					turn = sgn(turn) * (abs(turn) + stepsize);
+				}
 
+			}
 		}
 	}
+
+
 
 	ambientAirFlowLast = ambientAirFlow;
 
@@ -168,6 +181,7 @@ void GliderMobilityA::initialize(int stage)
 		climbRate = par("climbRate");
 		secondsPerRotation = par("secondsPerRotation");
 		traceInterval = par("traceInterval");
+	        experience = par("experience");
 
 	}
 	else if (stage == 1)
