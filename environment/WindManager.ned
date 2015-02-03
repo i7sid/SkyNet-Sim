@@ -20,7 +20,6 @@ simple WindManager
     parameters:
         double windDirection @unit("degree");
         double windSpeed @unit("mps");
-       
         double windDirChange @unit("dpkm") = default(0 dpkm);
         double windSpeedChange @unit("mpspkm")  = default(0 mpspkm);
 }

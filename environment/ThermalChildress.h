@@ -19,7 +19,7 @@ enum DDT
 	OUTER_DOWNDRAFT
 };
 
-class ThermalChildress
+class MIXIM_API ThermalChildress: public BaseModule
 {
 private:
 	//Coord pos;
@@ -29,16 +29,15 @@ private:
 	int downdraftType;
 	bool invert;
 	WindManager *wind;
-	Coord pos[4000];
+	Coord dPos[4000];
 
 public:
 	double upDraft(Coord gliderPos);
 	Coord positionAtAltitude(double z);
 	void updateThermalPos(void);
+	void initialize(int stage);
 
-	ThermalChildress(Coord posG, double zi, double Ts, double heatflux, int downdraftType, bool invert);
-	ThermalChildress(Coord posG, double zi, int downdraftType);
-
+	ThermalChildress();
 	virtual ~ThermalChildress()
 	{
 	};

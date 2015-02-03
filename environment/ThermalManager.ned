@@ -17,7 +17,5 @@ package skynet.environment;
 
 simple ThermalManager
 {
-    parameters:
-        int numThermals; // total number of thermals
         
 }

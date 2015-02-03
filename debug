@@ -1,2 +1,2 @@
 	#!/bin/sh
-gdb --args ./SkyNet -l../MiXiM/src/mixim -n".:../MiXiM/examples:../MiXiM/src/base:../MiXiM/src/inet_stub:../MiXiM/src/modules" "$@"
+lldb --args ./SkyNet -l../mixim-sommer/src/mixim-sommer -n".:../mixim-sommer/examples:../mixim-sommer/src/base:../mixim-sommer/src/inet_stub:../mixim-sommer/src/modules" "$@"

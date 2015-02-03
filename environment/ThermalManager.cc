@@ -46,13 +46,17 @@ void ThermalManager::initialize(int stage)
 
 	if (stage == 0)
 	{
-		numThermals = par("numThermals");
+		numDrafts = getAncestorPar("numDrafts");
+
 	}
 	else if (stage == 1)
 	{
-		thermals.push_back(ThermalChildress(Coord(2500, 2500, 0), 2000, NO_DOWNDRAFT));
 
-		ThermalChildress thermal = thermals.front();
+	}
+	else if (stage == 2)
+	{
+		draft = FindModule<ThermalChildress*>::findGlobalModule();
+		ASSERT(draft);
 
 		std::ofstream results;
  		results.open("results/thermal.csv");
@@ -63,7 +67,7 @@ void ThermalManager::initialize(int stage)
 		{
 			for(int z=0; z<1600; z+=10)
 			{
-				double updraft = thermal.upDraft(Coord(x,2500,z));
+				double updraft = draft[0].upDraft(Coord(x,2500,z));
 				results << x << "," << "2500" << "," << z << "," << updraft << endl;
 				//EV<<  "z: " << z << " updraft: " << updraft << endl;
 			}
@@ -75,7 +79,7 @@ void ThermalManager::initialize(int stage)
 
 		for(int z=0; z<3000; z+=1)
 		{
-			Coord pos = thermal.positionAtAltitude(z);
+			Coord pos = draft[0].positionAtAltitude(z);
 			results << pos.x << "," << pos.y << "," << pos.z << endl;
 			//EV<<  "z: " << z << " updraft: " << updraft << endl;
 		}
@@ -87,9 +91,12 @@ Coord ThermalManager::getAirFlow(Coord gliderPos)
 {
 	double z = 0;
 
-	for (std::list<ThermalChildress>::iterator list_iter = thermals.begin(); list_iter != thermals.end(); list_iter++)
+	draft = FindModule<ThermalChildress*>::findGlobalModule();
+	ASSERT(draft);
+
+	for (int i=0; i<numDrafts; i++)
 	{
-		z += list_iter->upDraft(gliderPos);
+		z += draft[i].upDraft(gliderPos);
 	}
 
 	return Coord(0,0,z);

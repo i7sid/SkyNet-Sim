@@ -9,33 +9,44 @@
 #include "WindManager.h"
 #include "ThermalChildress.h"
 
+Define_Module(ThermalChildress);
 
 //todo start and stop thermal
 
-ThermalChildress::ThermalChildress(Coord posG, double zi, double Ts, double heatflux, int downdraftType, bool invert) :
-		zi(zi), Ts(Ts), heatflux(heatflux), downdraftType(downdraftType), invert(invert)
+ThermalChildress::ThermalChildress()
 {
-	pos[0] = posG;
 
-	wind = FindModule<WindManager*>::findGlobalModule();
-	ASSERT(wind);
-
-	updateThermalPos();
 }
 
-ThermalChildress::ThermalChildress(Coord posG, double zi, int downdraftType) :
-		zi(zi), downdraftType(downdraftType)
+void ThermalChildress::initialize(int stage)
 {
-	pos[0] = posG;
+	BaseModule::initialize(stage);
 
-	wind = FindModule<WindManager*>::findGlobalModule();
-	ASSERT(wind);
+	EV << "Initializing ThermalChildress stage " << stage << endl;
 
-	invert = false;
-	heatflux = 0.4;
-	Ts = 300.15;
+	if (stage == 0)
+	{
+		invert = par("invert");
+		heatflux = par("heatflux");
+		Ts = par("Ts");
 
-	updateThermalPos();
+//		dPos = (Coord *)malloc(sizeof(Coord) * 4000);
+//		ASSERT(dPos);
+
+		dPos[0].x = par("x");
+		dPos[0].y = par("y");
+		dPos[0].z = 0;
+
+		zi= par("zi");
+	}
+	else if (stage == 1)
+	{
+
+		wind = FindModule<WindManager*>::findGlobalModule();
+		ASSERT(wind);
+
+		updateThermalPos();
+	}
 }
 
 void ThermalChildress::updateThermalPos(void)
@@ -69,11 +80,11 @@ void ThermalChildress::updateThermalPos(void)
 		//avoid drift to infinity
 		if(wpeak <  windDrift.length()/ 20)
 		{
-			pos[z] = pos[z-1];
+			dPos[z] = dPos[z-1];
 			continue;
 		}
 
-		pos[z] = pos[z-1] + (windDrift / wpeak);
+		dPos[z] = dPos[z-1] + (windDrift / wpeak);
 	}
 
 }
@@ -87,9 +98,8 @@ Coord ThermalChildress::positionAtAltitude(double z)
 		idx = 0;
 	else
 		idx = (int) z;
-
-	return (Coord(pos[idx].x, pos[idx].y, z));	//add wind here
-
+//	EV << dPos[400].info() << endl;
+	return (Coord(dPos[idx].x, dPos[idx].y, z));	//add wind here
 }
 
 double ThermalChildress::upDraft(Coord gliderPos)

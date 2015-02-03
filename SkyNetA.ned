@@ -18,8 +18,7 @@ package skynet;
 import org.mixim.base.modules.BaseNetwork;
 import org.mixim.modules.node.WirelessNode;
 
-import skynet.environment.ThermalManager;
-import skynet.environment.WindManager;
+import skynet.environment.Air;
 
 network SkyNetA extends BaseNetwork
 {
@@ -32,15 +31,10 @@ network SkyNetA extends BaseNetwork
             @display("p=280,71");
         }
         
-        thermal: ThermalManager
-        {
-            
-        }
-        
-        wind: WindManager
-        {
-            
-        }
+		air : Air
+		{
+		    
+		}
     connections allowunconnected:
     // all connections and gates are to be generated dynamically
 }

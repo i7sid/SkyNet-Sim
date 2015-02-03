@@ -28,8 +28,10 @@
 class MIXIM_API ThermalManager: public BaseModule
 {
 private:
-	int numThermals;
-	std::list<ThermalChildress> thermals;
+	int numDrafts;
+//	std::list<ThermalChildress> draft;
+
+	ThermalChildress *draft;
 
 protected:
 
