@@ -51,10 +51,6 @@ void ThermalManager::initialize(int stage)
 	}
 	else if (stage == 1)
 	{
-
-	}
-	else if (stage == 2)
-	{
 		draft = FindModule<ThermalChildress*>::findGlobalModule();
 		ASSERT(draft);
 
