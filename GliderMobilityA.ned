@@ -27,6 +27,7 @@ simple GliderMobilityA extends BaseMobility
        	double climbRate @unit(mps) = default(-1.2mps); // sinkrate of the host (in m/s)
        	double secondsPerRotation @unit("s") = default(20.0s); // seconds per rotation
         double acceleration @unit(mpss) = default(0.0mpss); // acceleration of linear motion (m/s2)
+        double sinkturn = default(-0.0009723);	//sinkrate factor for turn velocity
 
         double updateInterval @unit("s") = default(0.1s);
         string traceTest = default("");

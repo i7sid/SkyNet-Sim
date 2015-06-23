@@ -33,10 +33,10 @@ void WindManager::initialize(int stage)
 	else if (stage == 1)
 	{
 
-		for(uint i=0; i<2000; i+=100)
-		{
-			EV << i << " " << getWind(Coord(0,0,i)).info() << endl;
-		}
+	//	for(uint i=0; i<2000; i+=100)
+	//	{
+	//		EV << i << " " << getWind(Coord(0,0,i)).info() << endl;
+	//	}
 
 	}
 }

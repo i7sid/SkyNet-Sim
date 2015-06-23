@@ -38,6 +38,21 @@ void ThermalChildress::initialize(int stage)
 		dPos[0].z = 0;
 
 		zi= par("zi");
+		if(strcmp(par("downdraftType"), "CENTER_DOWNDRAFT") ==0)
+		{
+			EV << "CENTER_DOWNDRAFT" <<endl;
+			downdraftType = CENTER_DOWNDRAFT;
+		}
+		else if(strcmp(par("downdraftType"), "OUTER_DOWNDRAFT") ==0)
+		{
+			EV << "OUTER_DOWNDRAFT" <<endl;
+			downdraftType = OUTER_DOWNDRAFT;
+		}
+		else
+		{
+			EV << "NO_DOWNDRAFT" <<endl;
+			downdraftType = NO_DOWNDRAFT;
+		}
 	}
 	else if (stage == 1)
 	{
@@ -75,7 +90,7 @@ void ThermalChildress::updateThermalPos(void)
 		//Peak Vertical Velocity
 		double wpeak = ((3 * wtavg) * (pow(r2, 3) - (pow(r2, 2) * r1))) / (pow(r2, 3) - pow(r1, 3));
 
-		EV << "z=" << z <<" wpeak=" << wpeak << endl;
+		//EV << "z=" << z <<" wpeak=" << wpeak << endl;
 
 		//avoid drift to infinity
 		if(wpeak <  windDrift.length()/ 20)

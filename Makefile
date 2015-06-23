@@ -83,6 +83,7 @@ OBJS = \
     $O/GliderMobilityA.o \
     $O/Position.o \
     $O/PositionMessage.o \
+    $O/SimulationManager.o \
     $O/Transmission.o \
     $O/environment/Thermal.o \
     $O/environment/ThermalChildress.o \
@@ -231,6 +232,7 @@ $O/GliderApplLayer.o: GliderApplLayer.cc \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/Coord.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/FWMath.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/FindModule.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/HostState.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/MacToNetwControlInfo.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/MiXiMDefs.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/Move.h \
@@ -250,6 +252,7 @@ $O/GliderMobility.o: GliderMobility.cc \
 	$(MIXIM_SOMMER_PROJ)/src/base/modules/BatteryAccess.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/Coord.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/FWMath.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/HostState.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/MiXiMDefs.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/Move.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/miximkerneldefs.h \
@@ -257,6 +260,7 @@ $O/GliderMobility.o: GliderMobility.cc \
 $O/GliderMobilityA.o: GliderMobilityA.cc \
 	GliderMobilityA.h \
 	Position.h \
+	SimulationManager.h \
 	environment/ThermalChildress.h \
 	environment/ThermalManager.h \
 	environment/WindManager.h \
@@ -268,6 +272,7 @@ $O/GliderMobilityA.o: GliderMobilityA.cc \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/Coord.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/FWMath.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/FindModule.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/HostState.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/MiXiMDefs.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/Move.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/miximkerneldefs.h \
@@ -283,6 +288,12 @@ $O/PositionMessage.o: PositionMessage.cc \
 	PositionMessage.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/Coord.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/FWMath.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/MiXiMDefs.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/miximkerneldefs.h
+$O/SimulationManager.o: SimulationManager.cc \
+	SimulationManager.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/modules/BaseModule.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/HostState.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/MiXiMDefs.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/miximkerneldefs.h
 $O/Transmission.o: Transmission.cc \
@@ -301,6 +312,7 @@ $O/environment/ThermalChildress.o: environment/ThermalChildress.cc \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/Coord.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/FWMath.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/FindModule.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/HostState.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/MiXiMDefs.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/miximkerneldefs.h
 $O/environment/ThermalManager.o: environment/ThermalManager.cc \
@@ -311,6 +323,7 @@ $O/environment/ThermalManager.o: environment/ThermalManager.cc \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/Coord.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/FWMath.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/FindModule.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/HostState.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/MiXiMDefs.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/miximkerneldefs.h
 $O/environment/WindManager.o: environment/WindManager.cc \
@@ -318,6 +331,7 @@ $O/environment/WindManager.o: environment/WindManager.cc \
 	$(MIXIM_SOMMER_PROJ)/src/base/modules/BaseModule.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/Coord.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/FWMath.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/HostState.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/MiXiMDefs.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/miximkerneldefs.h
 $O/radio/PgMacLayer.o: radio/PgMacLayer.cc \
@@ -357,6 +371,7 @@ $O/radio/PgMacLayer.o: radio/PgMacLayer.cc \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/Coord.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/FWMath.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/FindModule.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/HostState.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/MacToNetwControlInfo.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/MiXiMDefs.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/Move.h \
@@ -395,6 +410,7 @@ $O/radio/PgPhyLayer.o: radio/PgPhyLayer.cc \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/Coord.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/FWMath.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/FindModule.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/HostState.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/MiXiMDefs.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/Move.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/miximkerneldefs.h \
@@ -426,6 +442,7 @@ $O/radio/PgRadioModel.o: radio/PgRadioModel.cc \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/Coord.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/FWMath.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/FindModule.h \
+	$(MIXIM_SOMMER_PROJ)/src/base/utils/HostState.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/MiXiMDefs.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/Move.h \
 	$(MIXIM_SOMMER_PROJ)/src/base/utils/miximkerneldefs.h \

@@ -35,6 +35,11 @@ network SkyNetA extends BaseNetwork
 		{
 		    
 		}
+		
+		sim : SimulationManager
+		{
+		    
+		}
     connections allowunconnected:
     // all connections and gates are to be generated dynamically
 }

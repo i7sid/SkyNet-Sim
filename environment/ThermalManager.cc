@@ -55,7 +55,7 @@ void ThermalManager::initialize(int stage)
 		ASSERT(draft);
 
 		std::ofstream results;
- 		results.open("results/thermal.csv");
+/* 		results.open("results/thermal.csv");
 		results << "x,y,z,updraft" << endl;
 
 		//int x = 2500;
@@ -69,7 +69,7 @@ void ThermalManager::initialize(int stage)
 			}
 		}
 		results.close();
-
+*/
  		results.open("results/thermalpos.csv");
 		results << "x,y,z" << endl;
 

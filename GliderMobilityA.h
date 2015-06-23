@@ -24,6 +24,7 @@
 #include "Position.h"
 #include "ThermalManager.h"
 #include "WindManager.h"
+#include "SimulationManager.h"
 
 class MIXIM_API GliderMobilityA :  public BaseMobility
 {
@@ -36,8 +37,9 @@ class MIXIM_API GliderMobilityA :  public BaseMobility
     double climbRate;
     double secondsPerRotation;
     double airSpeed;
+    double sinkturn;
 
-    double turn;	//turn in degree / second
+    double turn = 0.0;	//turn in degree / STEP
 
     double experience;
 
@@ -48,8 +50,15 @@ class MIXIM_API GliderMobilityA :  public BaseMobility
     std::ofstream traceTest;
     double traceInterval;
 
+    double ambientAirFlowLast = 0.0;
+
     ThermalManager* thermals;
     WindManager* wind;
+    SimulationManager* sim;
+
+
+
+    double climb(double airflow, double turn);
 
   public:
     GliderMobilityA();
@@ -58,6 +67,7 @@ class MIXIM_API GliderMobilityA :  public BaseMobility
     double getCourse();
     double getPlaygroundArea();
 
+    virtual int numInitStages() const {return 3;}
   protected:
 
     void initialize(int stage);
@@ -65,6 +75,8 @@ class MIXIM_API GliderMobilityA :  public BaseMobility
     void makeMove();
 
     void fixIfHostGetsOutside();
+
+    void killMe();
 
     void finish();
 
