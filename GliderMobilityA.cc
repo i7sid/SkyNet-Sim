@@ -174,9 +174,8 @@ void GliderMobilityA::handleSelfMsg(cMessage* msg)
 
 	else if (msg->getKind() == 666)
 	{
+		delete msg;
 		sim->unregisterGlider(getParentModule());
-
-
 	}
 	else
 	{
@@ -231,17 +230,18 @@ void GliderMobilityA::initialize(int stage)
 	{
 		sim = FindModule<SimulationManager*>::findGlobalModule();
 		ASSERT(sim);
-		//sim->registerGlider();
+		sim->registerGlider(getParentModule());
 
 		ThermalChildress *draft = FindModule<ThermalChildress*>::findGlobalModule();
 		ASSERT(draft);
 
 		//Place glider into thermal[0]
-		//Coord pos = draft[0].positionAtAltitude(move.getStartPos().z);
-		//pos.x+=30;
-		//move.setStart(pos);
-		//stepTarget = move.getStartPos();
-		//EV << "Start pos: " << move.getStartPos().info() << endl;
+		Coord pos = draft[0].positionAtAltitude(move.getStartPos().z);
+		pos.x+=uniform(-30,30,0);
+		pos.y+=uniform(-30,30,0);
+		move.setStart(pos);
+		stepTarget = move.getStartPos();
+		EV << "Start pos: " << move.getStartPos().info() << endl;
 
 
 	}
