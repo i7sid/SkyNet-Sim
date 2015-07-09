@@ -87,8 +87,6 @@ void GliderMobilityA::makeMove()
 		double left = thermals->getAirFlow(leftPos).z;
 		double right = thermals->getAirFlow(rightPos).z;
 
-		//todo invert decision with prop (consider right-left difference factor?)
-
 		if (left <= right)
 		{
 			turn = stepsize/2.0;
@@ -96,6 +94,12 @@ void GliderMobilityA::makeMove()
 		else
 		{
 			turn = -stepsize/2.0;
+		}
+
+		double human_factor = uniform(0,1,0);
+		if(human_factor > experience)
+		{
+			turn -= turn;		//do wrong decision
 		}
 	}
 	else				//we are thermaling
@@ -123,7 +127,6 @@ void GliderMobilityA::makeMove()
 				}
 
 			}
-
 		}
 	}
 
@@ -237,8 +240,8 @@ void GliderMobilityA::initialize(int stage)
 
 		//Place glider into thermal[0]
 		Coord pos = draft[0].positionAtAltitude(move.getStartPos().z);
-		pos.x+=uniform(-30,30,0);
-		pos.y+=uniform(-30,30,0);
+		pos.x+=uniform(-20,20,0);
+		pos.y+=uniform(-20,20,0);
 		move.setStart(pos);
 		stepTarget = move.getStartPos();
 		EV << "Start pos: " << move.getStartPos().info() << endl;
